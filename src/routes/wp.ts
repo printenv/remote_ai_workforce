@@ -1,5 +1,11 @@
 import express, {Request, Response, NextFunction} from 'express'
 import * as dotenv from "dotenv"
+import { getToken } from '../wp/utils/auth'
+import createCategory from '../wp/controller/createCategory'
+import {getDataFromWp, getWpAuthors} from '../wp/controller/get'
+import uploadImage from '../wp/controller/uploadImage'
+import postArticle from '../wp/controller/postArticle'
+import createAuthors from '../wp/controller/createAuthor'
 
 dotenv.config()
 
@@ -7,28 +13,43 @@ const route = express.Router()
 
 
 //GET
-route.get("/get-authours", async(req:Request, res:Response) => {
-    res.send("under development...")
-})
-route.get("/get-categories", async(req:Request, res:Response) => {
-    res.send("under development...")
-})
+route.get("/get", getDataFromWp)
+route.get("/get-authors", getWpAuthors)
 
 
-//POST
-route.post("/post-article", async(req:Request, res:Response) => {
-    res.send("under development...")
-})
-route.post("/create-author", async(req:Request, res:Response) => {
-    res.send("under development...")
-})
-route.post("/create-category", async(req:Request, res:Response) => {
-    res.send("under development...")
-})
-route.post("/upload-image", async(req:Request, res:Response) => {
-    res.send("under development...")
+/**
+ * POST /post-article
+ * 
+ */
+route.post("/post-article", async(req:Request, res:Response, next:NextFunction) => {
+
 })
 
+/**
+ * POST /create-author
+ * @param username
+ */
+route.post("/create-author", createAuthors)
 
+/**
+ * POST /create-category
+ * @param name (required) - The name of the category
+ * @param description (optional) - A description for the category
+ * @param slug (optional) - A URL-friendly slug for the category
+ * @param parent (optional) - The ID of the parent category
+ */
+route.post("/create-category", createCategory)
+
+/**
+ * POST /upload-image
+ * @param excerpt (required) - Exceprt of the aticle for image generation prompt.
+ * @returns {number} - Returns the ID of the uploaded media item, which can be used as featured image for a post.
+ */
+route.post("/upload-image", uploadImage)
+
+/**
+ * POST /publish-article
+ */
+route.post("/publish-article", postArticle)
 
 export default route
