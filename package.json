@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "nodemon",
+    "start": "NODE_ENV=production node ./dist/server.js",
+    "dev": "nodemon",
     "build": "tsc"
   },
   "dependencies": {
