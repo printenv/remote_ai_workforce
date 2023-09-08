@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd ${{ secrets.APP_PATH }}
+          git pull origin main
+          npm ci
+          npm run build
+          pm2 start ai_work_force || pm2 restart ai_work_force || pm2 start npm --name "ai_work_force" -- run start
