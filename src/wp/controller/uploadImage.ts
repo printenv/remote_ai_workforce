@@ -17,7 +17,7 @@ const uploadImage = async (req:Request, res:Response, next:NextFunction) =>{
         const end_point: WPEndpoints = "media"
         const articleExcerpt = req.body.excerpt ?? null
         if(!articleExcerpt) throw new Error("ArticleExcerpt not passed for image generation.")
-        const token = await getToken()
+        const token = req.body.token ? req.body.token : await getToken()
         
         const prompt = await makeThumbnailPromptFromText(articleExcerpt)
         const formData = await makeThumbnaiilFormData(prompt)
@@ -28,7 +28,7 @@ const uploadImage = async (req:Request, res:Response, next:NextFunction) =>{
               ...formData.getHeaders(),
             },
           });
-        res.json(result.data.id)
+        res.json(Number(result.data.id))
     }catch(err){
         next(err)
     }

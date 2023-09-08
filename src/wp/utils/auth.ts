@@ -14,9 +14,13 @@ export async function getToken(
     username: string=rootUsername as string, 
     password: string=rootPassword as string
     ){
-    const result = await axios.post(`${baseURL}/wp-json/jwt-auth/v1/token`, {
-        username,
-        password
-    })
-    return result.data.token
+    try{
+        const result = await axios.post(`${baseURL}/wp-json/jwt-auth/v1/token`, {
+            username,
+            password
+        })
+        return result.data.token
+    }catch(err: any){
+        throw new Error(`Failed to getToken. ${err.message}`)
+    }
 }

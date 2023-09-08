@@ -1,6 +1,7 @@
 import OpenAI from "openai"
 import * as dotenv from "dotenv"
 import FormData from 'form-data'
+import { ChatMessages, WpPostPrompt } from "../../types/WPTypes"
 
 dotenv.config()
 const openai = new OpenAI({apiKey:process.env.OPENAI_API_KEY})
@@ -33,7 +34,7 @@ export const makeThumbnailPromptFromText = async (text:string): Promise<string> 
             },
             {
                 "role":"user",
-                "content":"read a article excerpt and make suitable thumbnail image description for the excerpt. ---Kanazawa, often overshadowed by Tokyo and Kyoto, is a city in Japan's Ishikawa Prefecture that offers a rich blend of history, culture, and natural beauty. Known as Little Kyoto, it's a must-visit for anyone interested in traditional Japanese arts and crafts.---"
+                "content":"read a article excerpt and make suitable thumbnail image description for the excerpt in English. ---Kanazawa, often overshadowed by Tokyo and Kyoto, is a city in Japan's Ishikawa Prefecture that offers a rich blend of history, culture, and natural beauty. Known as Little Kyoto, it's a must-visit for anyone interested in traditional Japanese arts and crafts.---"
             },
             {
                 "role":"assistant",
@@ -41,7 +42,7 @@ export const makeThumbnailPromptFromText = async (text:string): Promise<string> 
             },
             {
                 "role":"user",
-                "content": `read a article excerpt and make suitable thumbnail image description for the excerpt. ---${text}---`
+                "content": `read a article excerpt and make suitable thumbnail image description for the excerpt in English. ---${text}---`
             }
         ],
         temperature: 0.2,
@@ -49,4 +50,32 @@ export const makeThumbnailPromptFromText = async (text:string): Promise<string> 
     })
     const style = " cubism painting."
     return response.choices[0].message.content + style
+}
+
+export const getChatCompletionResult = async (chatMessages: ChatMessages) => {
+    try{
+        const response = await openai.chat.completions.create({
+            model: "gpt-4-0314",
+            messages: chatMessages,
+            temperature: 0.2,
+            max_tokens: 2000
+        })
+        return response
+    }catch(error){
+        throw error
+    }
+}
+
+export const getWpPostPromptString = async (chatMessages: ChatMessages) => {
+    try{
+        const response = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo-0613",
+            messages: chatMessages,
+            temperature: 0,
+            max_tokens: 1000
+        })
+        return response
+    }catch(error){
+        throw error
+    }
 }

@@ -5,7 +5,7 @@ import createCategory from '../wp/controller/createCategory'
 import {getDataFromWp, getWpAuthors} from '../wp/controller/get'
 import uploadImage from '../wp/controller/uploadImage'
 import postArticle from '../wp/controller/postArticle'
-import createAuthors from '../wp/controller/createAuthor'
+import createAuthor from '../wp/controller/createAuthor'
 
 dotenv.config()
 
@@ -21,15 +21,13 @@ route.get("/get-authors", getWpAuthors)
  * POST /post-article
  * 
  */
-route.post("/post-article", async(req:Request, res:Response, next:NextFunction) => {
-
-})
+route.post("/post-article", postArticle)
 
 /**
  * POST /create-author
  * @param username
  */
-route.post("/create-author", createAuthors)
+route.post("/create-author", createAuthor)
 
 /**
  * POST /create-category
@@ -50,6 +48,6 @@ route.post("/upload-image", uploadImage)
 /**
  * POST /publish-article
  */
-route.post("/publish-article", postArticle)
+route.post("/post-article", postArticle)
 
 export default route
