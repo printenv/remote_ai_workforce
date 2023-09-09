@@ -6,6 +6,7 @@
 - WP_NAMIHEI_PASSWORD
 - WP_MORTY_PASSWORD
 - OPENAI_API_KEY
+- PORT
 
 ## CI/CD Setup
 ### Setup Secretes and variables (Actions) bellow on github
