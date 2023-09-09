@@ -11,8 +11,8 @@ if(!ikuraPassword || !mortyPassword || !namiheiPassword){
     throw new Error("WP_username_PASSWORD is not set.")
 }
 const ikura = new Author({
-      username: "19ra",
-      email: "ikura@bux-web.com",
+      username: "ikura",
+      email: "ikura2@bux-web.com",
       password: ikuraPassword,
       personality: "フロントエンドデベロッパーのZ世代女子",
       categories: ["UXデザイン", "モバイルマーケティング", "ランディングページ最適化", "ローカルSEO", "ARでのマーケティング", "ブランディング"]

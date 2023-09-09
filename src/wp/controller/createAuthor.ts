@@ -33,13 +33,14 @@ const createAuthor = async (req:Request, res:Response, next:NextFunction) => {
                 })
                 res.send(`User created : ${username}`)
             }catch(err:any){
-                console.log(err)
+                console.log(err.mesaage)
                 throw new Error(`createAuthors() failed. ${err.message}`)
             }
         }else{
             res.send(`${username} already exists.`)
         }   
-    }catch(err){
+    }catch(err:any){
+        console.log(err.message)
         next(err)
     }
 }

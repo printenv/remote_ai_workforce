@@ -1,5 +1,5 @@
 import express, {Request, Response} from 'express'
-import errorHandler from "./midlleware/errorHandler"
+import errorHandler from './midlleware/errorHandler'
 import openaiRoute from './routes/openai'
 import azureRoute from "./routes/azure"
 import wpRoute from './routes/wp'

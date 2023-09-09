@@ -40,7 +40,7 @@ export async function postAutomation(){
     // # │ │ │ │ │ │
     // # * * * * * *
     
-    cron.schedule('*/5 * * * *', async () => {
+    cron.schedule('* */3 * * *', async () => {
         const author = authors[authorIndex]
         authorIndex = (authorIndex + 1) % authors.length
         console.log("cron start")
